@@ -61,12 +61,12 @@ function Signin() {
 
   return (
     <Flex
-      minWidth="30vw"
+      minHeight="85vh"
       alignItems="center"
       justifyContent="center"
       bgGradient={useColorModeValue('white', 'gray.700')}
     >
-      <Box bg={useColorModeValue('white', 'gray.700')} p={8} rounded="lg" shadow="lg" maxW="lg" w="full">
+      <Box bg={useColorModeValue('white', 'gray.700')} p={8} rounded="lg" shadow="lg" maxW="lg" w="30rem">
         <Heading mb={6} textAlign="center" fontSize="2xl" color={useColorModeValue('purple.600', 'purple.300')}>
           Welcome Back
         </Heading>
