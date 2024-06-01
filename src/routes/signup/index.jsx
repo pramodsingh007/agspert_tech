@@ -49,7 +49,7 @@ const Signup = () => {
   };
 
   return (
-    <Flex minHeight="80vh" alignItems="center" justifyContent="center" bgGradient={useColorModeValue('white', 'gray.700')}>
+    <Flex  minWidth="30vw" alignItems="center" justifyContent="center" bgGradient={useColorModeValue('white', 'gray.700')}>
       <Box
         bg={useColorModeValue('white', 'gray.700')}
         p={8}

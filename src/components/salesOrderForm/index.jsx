@@ -21,86 +21,16 @@ import {
 } from "@chakra-ui/react";
 import { Select } from "chakra-react-select";
 import { InventoryContext } from "../../context/inventoryContext";
+import { useQuery } from "@tanstack/react-query";
+import { getCustomerSchema, getProductSchema } from "../../api/orders";
 
-const products = [
-  {
-    id: 209,
-    display_id: 8,
-    owner: 1079,
-    name: "New Product",
-    category: "The god of War",
-    characteristics: "New Product Characteristics",
-    features: "",
-    brand: "New Product Brand",
-    sku: [
-      {
-        id: 248,
-        selling_price: 54,
-        max_retail_price: 44,
-        amount: 33,
-        unit: "kg",
-        quantity_in_inventory: 0,
-        product: 209,
-      },
-      {
-        id: 247,
-        selling_price: 32,
-        max_retail_price: 32,
-        amount: 33,
-        unit: "kg",
-        quantity_in_inventory: 0,
-        product: 209,
-      },
-      {
-        id: 246,
-        selling_price: 23,
-        max_retail_price: 21,
-        amount: 22,
-        unit: "kg",
-        quantity_in_inventory: 1,
-        product: 209,
-      },
-    ],
-    updated_on: "2024-05-24T12:46:41.995873Z",
-    adding_date: "2024-05-24T12:46:41.995828Z",
-  },
-];
-
-const customer = [
-  {
-    id: 9,
-    customer: 11908,
-    customer_profile: {
-      id: 11908,
-      name: "Shyam",
-      color: [182, 73, 99],
-      email: "jesus_christ@church.com",
-      pincode: "Mumbai",
-      location_name: "Mumbai, Maharashtra, India",
-      type: "C",
-      profile_pic: null,
-      gst: "",
-    },
-  },
-  {
-    id: 9,
-    customer: 11908,
-    customer_profile: {
-      id: 11908,
-      name: "Ram",
-      color: [182, 73, 99],
-      email: "jesus_christ@church.com",
-      pincode: "Mumbai",
-      location_name: "Mumbai, Maharashtra, India",
-      type: "C",
-      profile_pic: null,
-      gst: "",
-    },
-  },
-];
 
 
 const FormComponent = ({onClose,defaultValues,action,readOnly}) => {
+  const products = useQuery({queryKey:['products'],queryFn:getProductSchema}).data
+  const customer = useQuery({queryKey:['customer'],queryFn:getCustomerSchema}).data
+  // if(!products && !customer)return
+  // console.log(data)
   const {setItem,updateItem} = useContext(InventoryContext);
   const { handleSubmit, register, control, watch,reset, formState: { errors,isValid } } = useForm({
     defaultValues: defaultValues
@@ -120,7 +50,7 @@ const FormComponent = ({onClose,defaultValues,action,readOnly}) => {
 
     selectedProductIds.forEach((productId) => {
       if (!existingProductIds.includes(productId)) {
-        const product = products.find((p) => p.id === productId);
+        const product = products?.find((p) => p.id === productId);
         product.sku.forEach((sku) => {
           append({
             productId: productId,
@@ -156,7 +86,7 @@ const FormComponent = ({onClose,defaultValues,action,readOnly}) => {
   });
 
   return (
-    <Box maxW="full" mx="auto" mt={5} borderRadius="lg">
+    <Box minW="full" mx="auto" mt={5} borderRadius="lg">
       <form onSubmit={handleSubmit(onSubmit)}>
         <VStack spacing={4} align="stretch">
           <HStack spacing={8} align="stretch">
@@ -191,7 +121,7 @@ const FormComponent = ({onClose,defaultValues,action,readOnly}) => {
                   isReadOnly={readOnly}
                   {...field}
                   placeholder="Select a customer"
-                  options={customer.map((c) => ({
+                  options={customer?.map((c) => ({
                     value: c,
                     label: c.customer_profile.name,
                   }))}
@@ -212,7 +142,7 @@ const FormComponent = ({onClose,defaultValues,action,readOnly}) => {
                 
                   isReadOnly={readOnly}
                   {...field}
-                  options={products.map((product) => ({
+                  options={products?.map((product) => ({
                     label: product.name,
                     value: product.id,
                   }))}

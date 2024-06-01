@@ -11,7 +11,7 @@ function Inventory() {
       <Box
         bg={useColorModeValue('white', 'gray.700')}
         p={8}
-        maxW=""
+        minW="80vw"
         w="full"
       >
         <Tabs isFitted variant="enclosed" mt={4}>
@@ -19,7 +19,7 @@ function Inventory() {
             <Tab>Active Sales Orders</Tab>
             <Tab>Completed Sales Orders</Tab>
             <AddSalesModal isOpen={isOpen} onClose={onClose}/>
-            <Button onClick={onOpen}>+ Sales Order</Button>
+            <Button ml={1} onClick={onOpen}>+ Sales Order</Button>
           </TabList>
           <TabPanels>
             <TabPanel>

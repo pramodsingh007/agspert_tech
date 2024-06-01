@@ -61,7 +61,7 @@ function Signin() {
 
   return (
     <Flex
-      minHeight="80vh"
+      minWidth="30vw"
       alignItems="center"
       justifyContent="center"
       bgGradient={useColorModeValue('white', 'gray.700')}
